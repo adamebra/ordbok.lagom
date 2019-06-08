@@ -1,18 +1,25 @@
 import React from 'react';
 import './App.css';
-import Form from '../Form'
+import Result from '../Result/Result';
 
-class App extends React.Component{
+export default class App extends React.Component{
+  nameInput: any;
+
+  componentDidMount(){
+    if(this.nameInput){
+      this.nameInput.focus();
+    }
+  }
 
   public render(){
     return(
       <div className="App">
-        <Form text="Hello" age={5} />
+        <h1>Ordbok Lagom</h1>
+        <div>Svenska <button> > </button> Nederländska</div>
+        <input autoFocus name="phrase" />
+        <Result  />
       </div>
 
     )
   }
 }
-
-
-export default App;
