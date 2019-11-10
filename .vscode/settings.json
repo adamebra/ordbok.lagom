@@ -13,7 +13,8 @@
         }
     ],
     "eslint.workingDirectories": [
-        "./frontend"
+        "./frontend",
+        "./backend"
     ],
     "[typescript]": {
         "editor.insertSpaces": true,
