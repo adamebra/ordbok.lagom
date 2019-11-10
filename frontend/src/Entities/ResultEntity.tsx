@@ -1,7 +1,4 @@
-
-export class ResultEntity {
-    constructor(
-        Swedish:string, 
-        Dutch: string
-    ) {  }
+export interface ResultEntity {
+  Swedish: string;
+  Dutch: string;
 }
