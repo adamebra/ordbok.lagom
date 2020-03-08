@@ -3,5 +3,7 @@ import Result from './Result';
 import { shallow } from 'enzyme';
 
 it('renders shallow without crashing', () => {
-  shallow(<Result />);
+  const results = [{ formclass: 'Testar', wordclass: 'Test', words: ['test', 'test'] }];
+
+  shallow(<Result results={results} />);
 });
