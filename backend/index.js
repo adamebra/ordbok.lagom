@@ -1,36 +1,18 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
-const utf8 = require('utf8');
+const express = require('express')
+const crawler = require('./lagom.crawler.js')
+const cors = require('cors')
 
+const app = express()
+const port = 3001
 
-axios.get('http://ordbok.lagom.nl/woord.cgi/sv?q=r%E4nna&l=sv')
-    .then(response => {
-        const resultString = JSON.parse(JSON.stringify(response.data));
-        console.log(resultString)
-        const $ = cheerio.load(resultString);
-        let result = $('#hitlist').find('.hit');
+app.use(cors())
 
-        console.log(result)
-        const hits = result.map((index, elem) => {
-            const words = $(elem).contents().filter(function () {
-                return this.nodeType === 3;
-            })
-            .toArray()
-            .map((item)=> {
-                //This javascript code removes all 3 types of line breaks
-                const someText = item.data.replace(/(\r\n|\n|\r)/gm,"");
-                return someText;
-            })
-            .filter((item)=> item !== "")[0].split(",");
-
-            return {
-                wordclass: $(elem).find('.wordclass').text(),
-                formclass: $(elem).find('.formclass').text(),
-                words: words
-            }
-        });
-        console.log(hits);
-    })
-    .catch(error => {
-        console.log(error);
+app.get('/', (req, res) => {
+    crawler.find(req.query.word, req.query.l)
+    .then((response)=>{
+        res.send(response)
     });
+});
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
